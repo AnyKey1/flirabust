@@ -26,11 +26,12 @@
                     <li class="list-inline-item">
                         <i class="ti-calendar"></i>14 jan, 2020
                     </li>
+
                     <li class="list-inline-item">
                         <ul class="card-meta-tag list-inline">
-                            <li class="list-inline-item"><a href="tags.html">Color</a></li>
-                            <li class="list-inline-item"><a href="tags.html">Recipe</a></li>
-                            <li class="list-inline-item"><a href="tags.html">Fish</a></li>
+                            @foreach($book->tags as $tag)
+                            <li class="list-inline-item"><a href="/tags/{{$tag}}">{{$tag}}</a></li>
+                            @endforeach
                         </ul>
                     </li>
                 </ul>
@@ -56,6 +57,7 @@
                         but balancing commercially and creatively lucrative work is tricky. So, this article looks at</p>
                 </div>
             </article>
+            <button type="submit" class="btn btn-primary btn-block"  onclick="window.location='/download/{{$book->id}}'">Скачать.</button>
 
         </div>
 

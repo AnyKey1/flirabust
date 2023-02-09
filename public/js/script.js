@@ -5,7 +5,7 @@
  * GITHUB: https://github.com/themefisher/
  */
 
-// Preloader js    
+// Preloader js
 $(window).on('load', function () {
 	'use strict';
 	$('.preloader').fadeOut(100);
@@ -56,16 +56,6 @@ $(window).on('load', function () {
 		$(this).parent().find('.ti-minus').removeClass('ti-minus').addClass('ti-plus');
 	});
 
-	//post slider
-	$('.post-slider').slick({
-		slidesToShow: 1,
-		slidesToScroll: 1,
-		autoplay: true,
-		dots: false,
-		arrows: true,
-		prevArrow: '<button type=\'button\' class=\'prevArrow\'><i class=\'ti-angle-left\'></i></button>',
-		nextArrow: '<button type=\'button\' class=\'nextArrow\'><i class=\'ti-angle-right\'></i></button>'
-	});
 
 	// copy to clipboard
 	$('.copy').click(function () {
@@ -86,7 +76,10 @@ $(window).on('load', function () {
 		userFeed.run();
 	}
 
+    $('.instagram-slider').css("display", "none");
 	setTimeout(function () {
+        $('.instagram-slider').css("display", "block");
+
 		$('.instagram-slider').slick({
 			dots: false,
 			speed: 300,
@@ -133,3 +126,69 @@ $(window).on('load', function () {
 
 
 })(jQuery);
+
+page = 1;
+
+template = '                        <div class="col-lg-6 col-sm-6 post">\n' +
+    '                            <article class="card mb-4">\n' +
+    '                                <div class="post-slider slider-sm slick-initialized slick-slider"><button type="button" class="prevArrow slick-arrow" style=""><i class="ti-angle-left"></i></button>\n' +
+    '                                         <div class="slick-list draggable"><div class="slick-track" style="opacity: 1; width: 1750px; transform: translate3d(-350px, 0px, 0px);">\n' +
+    '                                            <img src="/images/no-cover.png" class="card-img-top slick-slide slick-cloned" alt="post-thumb" data-slick-index="-1" aria-hidden="true" tabindex="-1" style="width: 350px;">\n' +
+    '                                            <img src="/images/no-cover.png" class="card-img-top slick-slide slick-current slick-active" alt="post-thumb" data-slick-index="0" aria-hidden="false" tabindex="0" style="width: 350px;">\n' +
+    '                                            <img src="/images/no-cover.png" class="card-img-top slick-slide" alt="post-thumb" data-slick-index="1" aria-hidden="true" tabindex="-1" style="width: 350px;">\n' +
+    '                                            <img src="/images/no-cover.png" class="card-img-top slick-slide slick-cloned" alt="post-thumb" data-slick-index="2" aria-hidden="true" tabindex="-1" style="width: 350px;">\n' +
+    '                                            <img src="/images/no-cover.png" class="card-img-top slick-slide slick-cloned" alt="post-thumb" data-slick-index="3" aria-hidden="true" tabindex="-1" style="width: 350px;">\n' +
+    '                                        </div>' +
+    '                                    </div>' +
+    '                                    <button type="button" class="nextArrow slick-arrow" style=""><i class="ti-angle-right"></i></button></div>\n' +
+    '                                <div class="card-body">\n' +
+    '                                    <h3 class="h4 mb-3"><a class="post-title" href="post/elements/">$post->title.</a></h3>\n' +
+    '                                    <ul class="card-meta list-inline">\n' +
+    '                                        <li class="list-inline-item">\n' +
+    '                                            <a href="author-single.html" class="card-meta-author">\n' +
+    '                                                <img src="images/john-doe.jpg" alt="John Doe">\n' +
+    '                                                <span>$post->author_name</span>\n' +
+    '                                            </a>\n' +
+    '                                        </li>\n' +
+    '                                        <li class="list-inline-item">\n' +
+    '                                            <i class="ti-timer"></i>3 Min To Read\n' +
+    '                                        </li>\n' +
+    '                                        <li class="list-inline-item">\n' +
+    '                                            <i class="ti-calendar"></i>$post->created_at->timestamp\n' +
+    '                                        </li>\n' +
+    '                                        <li class="list-inline-item">\n' +
+    '                                            <ul class="card-meta-tag list-inline">\n' +
+    '                                                <li class="list-inline-item"><a href="tags.html">Demo</a></li>\n' +
+    '                                                <li class="list-inline-item"><a href="tags.html">Elements</a></li>\n' +
+    '                                            </ul>\n' +
+    '                                        </li>\n' +
+    '                                    </ul>\n' +
+    '                                    <p>Heading example Here is example of hedings. You can use this heading by …</p>\n' +
+    '                                    <a href="/book/$post->id" class="btn btn-outline-primary">Read More</a>\n' +
+    '                                </div>\n' +
+    '                            </article>\n' +
+    '                        </div>'
+
+time = 100;
+function loadMore(){
+
+
+    $.ajax({
+            method: "POST",
+            url: "/api/recent/" + page,
+        })
+        .done(function( data ) {
+            page++;
+            $.each(data, function(key, value){
+                setTimeout(function (){
+
+                    html = template.replace('$post->title', data[key].title)
+                        .replace('$post->author_name', data[key].author_name)
+                        .replace('$post->id', data[key].id);
+
+                    $(html).insertBefore('#loadmore');
+                }, time +=50);
+            });
+        });
+    //console.log(page);
+}

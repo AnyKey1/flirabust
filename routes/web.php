@@ -15,11 +15,14 @@ use App\Http\Controllers\IndexController;
 |
 */
 
-Route::get('/', function () {
-    return view('main')->with("recent", IndexController::getRecent());
-});
+/*Route::get('/', function () {
+    return view('main')->with("recent", IndexController::getRecent())->with('tags', [1,2,3]);
+});*/
+
+Route::get('/', [IndexController::class, "getMain"])->name('main');
+
 Route::get('/test', function () {
     return view('welcome');
 });
-Route::get('/book/{id}', [BooksController::class, "show"]);
+Route::get('/book/{id}', [BooksController::class, "show"])->name('book');
 Route::get('/download/{id}', [BooksController::class, "download"]);

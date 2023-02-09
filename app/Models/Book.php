@@ -48,4 +48,27 @@ class Book extends Model {
         }
         return $fileId;
     }
+
+    public function getTagsAttribute($value){
+        return array_map("trim", explode(',', $value));
+    }
+
+    public function getCategoryAttribute($value){
+        return explode(':', $value);
+    }
+
+    public function getAuthorNameAttribute($value){
+
+        $res = [];
+        $authors = explode(":", $value);
+
+        foreach ($authors as $author){
+            $res[] = str_replace(",", " ", $author);
+        }
+
+        return implode("; ", $res);
+
+
+    }
+
 }

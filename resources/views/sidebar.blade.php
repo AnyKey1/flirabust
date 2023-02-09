@@ -132,7 +132,7 @@
             <h4 class="widget-title">Recent Post</h4>
 
             <!-- post-item -->
-            @foreach($recent  as $r)
+            @foreach(\App\Http\Controllers\IndexController::getRecent()  as $r)
             <article class="widget-card">
                 <div class="d-flex">
                     <img class="card-img-sm" src="images/post/post-10.jpg">
@@ -140,14 +140,14 @@
                         <h5><a class="post-title" href="/book/{{$r->id}}">{{ $r->title  }} - {{ $r->author_name }}</a></h5>
                         <ul class="card-meta list-inline mb-0">
                             <li class="list-inline-item mb-0">
-                                <i class="ti-calendar"></i>15 jan, 2020
+                                <i class="ti-calendar"></i>{{ date("Y m d",  $r->created_at->timestamp) }}
                             </li>
                         </ul>
                     </div>
                 </div>
             </article>
             @endforeach
-
+{{--
             <article class="widget-card">
                 <div class="d-flex">
                     <img class="card-img-sm" src="images/post/post-3.jpg">
@@ -176,7 +176,7 @@
                 </div>
             </article>
         </div>
-
+--}}
         <!-- Social -->
         <div class="widget">
             <h4 class="widget-title"><span>Social Links</span></h4>
