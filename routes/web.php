@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +27,5 @@ Route::get('/test', function () {
 });
 Route::get('/book/{id}', [BooksController::class, "show"])->name('book');
 Route::get('/download/{id}', [BooksController::class, "download"]);
+//Route::get('/search/', [SearchController::class, "get"]);
+Route::get('/search/', [SearchController::class, "search"])->name("search");

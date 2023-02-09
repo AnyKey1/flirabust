@@ -1,6 +1,8 @@
 @extends("main")
 
-@section('book')
+
+@section('content')
+    <div class="py-4"></div>
     <div class="row justify-content-center">
         <div class=" col-lg-9   mb-5 mb-lg-0">
             <article>

@@ -361,18 +361,16 @@
 <section class="section-sm">
     <div class="container">
 
-        @if(Route::currentRouteName()  == 'book')
-            @yield('book')
-        @else
+        @section('content')
             <div class="row justify-content-center">
-                <div class="col-8 mb-5 mb-lg-0">
+                <div class="col-12 col-lg-8 col-sm-12 mb-5 mb-lg-0">
                     <h2 class="h5 section-title">Recent Post</h2>
                     <div class="row" id="posts">
 
 
                         @foreach(\App\Http\Controllers\IndexController::getRecent(0) as $post)
-                        <div class="col-lg-6 col-sm-6 post">
-                            <article class="card mb-4">
+                        <div class="col-lg-6 col-sm-12 post">
+                            <article class="card mb-6">
                                 <div class="post-slider slider-sm slick-initialized slick-slider"><button type="button" class="prevArrow slick-arrow" style=""><i class="ti-angle-left"></i></button>
                                     <div class="slick-list draggable"><div class="slick-track" style="opacity: 1; width: 1750px; transform: translate3d(-350px, 0px, 0px);">
                                             <img src="/images/no-cover.png" class="card-img-top slick-slide slick-cloned" alt="post-thumb" data-slick-index="-1" aria-hidden="true" tabindex="-1" style="width: 350px;">
@@ -769,8 +767,9 @@
 
                 @include('sidebar')
             </div>
-        @endif
+        @endsection
 
+        @yield('content')
 
     </div>
 </section>
