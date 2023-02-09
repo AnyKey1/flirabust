@@ -88,24 +88,20 @@ class BooksController extends Controller
     /**
      *
      *
-     * @param  \App\Models\Book  $book
+     * @param  integer $bookId
      * @return \Illuminate\Http\Response
      */
-    public function download(Book $book)
+    public function download(int $bookId)
     {
-        $zip = new \ZipArchive;
+        $book = Book::find($bookId);
+        $fileName = Book::extractFile($book->some_another_id);
+        $content = file_get_contents(storage_path()."/app/public/{$fileName}.fb2");
 
-
-
-
-
-        if ($zip->open('GeeksforGeeks.zip') === TRUE) {
-
-            $zip->extractTo(app() . '/storage/app/public/');
-            $zip->close();
-            echo 'Unzipped Process Successful!';
-        } else {
-            echo 'Unzipped Process failed';
-        }
+        return response($content)
+            ->withHeaders([
+                'Content-Type' =>  'application/xml',
+                "Content-length" => strlen($content),
+                "Content-disposition" => "attachment; filename=\"{$book->id}.fb2\"",
+            ]);
     }
 }

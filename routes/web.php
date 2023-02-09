@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BooksController;
+use App\Http\Controllers\IndexController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +16,7 @@ use App\Http\Controllers\BooksController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('main')->with("recent", IndexController::getRecent());
 });
 Route::get('/test', function () {
     return view('welcome');
