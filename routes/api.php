@@ -19,3 +19,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::any('/recent/{page}', [\App\Http\Controllers\IndexController::class, "getRecent"]);
+Route::get('/search/', [SearchController::class, "search"]);
+
