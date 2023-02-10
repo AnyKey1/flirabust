@@ -383,12 +383,12 @@
 
                                     <button type="button" class="nextArrow slick-arrow" style=""><i class="ti-angle-right"></i></button></div>
                                 <div class="card-body">
-                                    <h3 class="h4 mb-3"><a class="post-title" href="post/elements/">{{ $post->title }}.</a></h3>
+                                    <h3 class="h4 mb-3"><a class="post-title" href="{{ route("book", $post->id)}}/">{{ $post->title }}.</a></h3>
                                     <ul class="card-meta list-inline">
                                         <li class="list-inline-item">
                                             <a href="author-single.html" class="card-meta-author">
-                                                <img src="images/john-doe.jpg" alt="John Doe">
-                                                <span>John Doe</span>
+                                                <img src="images/john-doe.jpg" alt="{{$post->author_name}}">
+                                                <span> {{ $post->author_name }}</span>
                                             </a>
                                         </li>
                                         <li class="list-inline-item">
@@ -405,7 +405,7 @@
                                         </li>
                                     </ul>
                                     <p>Heading example Here is example of hedings. You can use this heading by …</p>
-                                    <a href="post/elements/" class="btn btn-outline-primary">Read More</a>
+                                    <a href="{{ route("book", $post->id)}}/" class="btn btn-outline-primary">Read More</a>
                                 </div>
                             </article>
                         </div>

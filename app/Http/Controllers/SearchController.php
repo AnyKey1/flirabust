@@ -21,15 +21,27 @@ class SearchController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function search(Request $request){
+    public function search(?Request $request){
+
+        //dd($request->input());
+
+        if(count($request->input()) == 0){
+            return view("search")->with("result", []);
+        }
 
         $author = $request->input("author");
         $title = $request->input("title");
 
         $result = [];
-        $result = Book::where('title', 'LIKE', "%{$title}%")
-            ->where('author_name', 'LIKE', "%{$author}%")
-            ->get();
+        $result = Book::where("id", ">", "0");
+        if($author){
+            $result->where('author_name', 'LIKE', "%{$author}%");
+        }
+
+        if($title){
+            $result->where('title', 'LIKE', "%{$title}%");
+        }
+        $result = $result->get();
 
         //dd([$title, $author]);
         return view("search")->with("result", $result);
