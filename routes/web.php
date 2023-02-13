@@ -29,3 +29,7 @@ Route::get('/book/{id}', [BooksController::class, "show"])->name('book');
 Route::get('/download/{id}', [BooksController::class, "download"]);
 //Route::get('/search/', [SearchController::class, "get"]);
 Route::get('/search/', [SearchController::class, "search"])->name("search");
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -57,7 +57,8 @@ services:
     container_name: '${APP_NAME}_db'
     restart: always
     ports:
-      - '${DB_PORT}:3306'
+      -   target: 3306
+          published: '${APP_DB_PORT}'
     environment:
       MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASS}'
       MYSQL_USER: '${MYSQL_USER}'
@@ -73,12 +74,11 @@ services:
     networks:
       - app_network
 
-  npm:
-    image: node:latest
-    container_name: '${APP_NAME}_npm'
-    volumes:
-      - ./:/var/www/html
+  node:
+    build:
+      context: ./bin/nodejs
+      dockerfile: Dockerfile
+    #container_name: '${APP_NAME}_npm'
     working_dir: /var/www/html
-    entrypoint: ['npm', '--no-bin-links']
-    networks:
-      - app_network
+    volumes:
+          - .:/var/www/html
