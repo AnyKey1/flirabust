@@ -4,10 +4,8 @@
 
 
     <div class="container">
-
         <form method="get" action="{{ route("search") }}">
             <div class="row">
-
                 <div class="form-group col-md-5">
                     <input class="form-control shadow-none" type="text" placeholder="Название" name="title">
                 </div>
