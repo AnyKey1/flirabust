@@ -19,7 +19,7 @@
                 </div>
             </div>
         </form>
-
+        @if($result)
         <div class="row justify-content-center">
             <div class="col-lg-12 mb-4">
                 <h1 class="h2 mb-4">Search results for
@@ -74,5 +74,6 @@
                 @endforeach
             </div>
         </div>
+        @endif
     </div>
 @endsection

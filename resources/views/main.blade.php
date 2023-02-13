@@ -30,7 +30,19 @@
     <!--Favicon-->
     <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon">
     <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <meta property="og:title" content="Reader | Hugo Personal Blog Template" />
     <meta property="og:description" content="This is meta description" />
     <meta property="og:type" content="website" />
@@ -83,21 +95,21 @@
                         </div>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                        <a class="nav-link" href="/search/" role="button" data-toggle="dropdown" aria-haspopup="true"
                            aria-expanded="false">
-                            About <i class="ti-angle-down ml-1"></i>
+                            Личный кабинет <i class="ti-angle-down ml-1"></i>
                         </a>
-                        <div class="dropdown-menu">
+                         <div class="dropdown-menu">
 
-                            <a class="dropdown-item" href="about-me.html">About Me</a>
+                            <a class="dropdown-item" href="/register/">Регистрация</a>
 
-                            <a class="dropdown-item" href="about-us.html">About Us</a>
+                            <a class="dropdown-item" href="/login/">Вход</a>
 
                         </div>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact</a>
+                        <a class="nav-link" href="/search/">Поиск</a>
                     </li>
 
                     <li class="nav-item dropdown">
