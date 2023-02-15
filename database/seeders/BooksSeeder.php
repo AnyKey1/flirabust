@@ -13,7 +13,8 @@ class BooksSeeder extends Seeder {
      * @return void
      */
     public function run() {
-        $handle = opendir("/var/www/files");
+        $inp_dir = "/var/www/files/upload";
+        $handle = opendir($inp_dir);
         /* Именно такой способ чтения элементов каталога является правильным. */
         while (false !== ($entry = readdir($handle))) {
 
@@ -21,7 +22,7 @@ class BooksSeeder extends Seeder {
             if (strpos($entry, ".inp")) {
                 echo "\n $entry";
                 //$entry = 'fb2-168103-172702.inp';
-                $file = fopen("/var/www/files/".$entry, "r");
+                $file = fopen($inp_dir."/".$entry, "r");
                 while (($string = fgets($file, 1024 * 100)) !== false) {
 
                     $string = str_replace("'", "\'", $string);
@@ -34,8 +35,8 @@ class BooksSeeder extends Seeder {
                     $params['title']           = $fields[2];
                     $params['serie']           = $fields[3];
                     $params['some_id']         = $fields[4];
-                    $params['some_another_id'] = $fields[5];
-                    $params['some_unknown_id'] = $fields[6];
+                    $params['file_id']         = $fields[5];
+                    $params['file_size']       = $fields[6];
                     $params['some_id_7']       = $fields[7];
                     $params['some_id_8']       = $fields[8];
                     $params['format']          = $fields[9];
@@ -43,7 +44,23 @@ class BooksSeeder extends Seeder {
                     $params['some_id_12']      = $fields[11];
                     $params['tags']            = $fields[13];
                     $params['some_id_14']      = $fields[12];
-
+/*AUTHOR;
+GENRE;
+TITLE;
+SERIES;
+SERNO;
+FILE;
+SIZE;
+LIBID;
+DEL;
+EXT;
+DATE;
+INSNO;
+FOLDER;
+LANG;
+LIBRATE;
+KEYWORDS;
+*/
                     //print_r($params);
 
                     echo "\n {$params["author_name"]} - {$params["title"]}";

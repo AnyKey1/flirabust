@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class BooksController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -20,7 +21,7 @@ class BooksController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -30,8 +31,8 @@ class BooksController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -41,8 +42,8 @@ class BooksController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  integer $id
-     * @return \Illuminate\Http\Response
+     * @param integer $id
+     * @return Response
      */
     public function show(int $id)
     {
@@ -54,8 +55,8 @@ class BooksController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Book  $book
-     * @return \Illuminate\Http\Response
+     * @param Book $book
+     * @return Response
      */
     public function edit(Book $book)
     {
@@ -65,9 +66,9 @@ class BooksController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Book  $book
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Book $book
+     * @return Response
      */
     public function update(Request $request, Book $book)
     {
@@ -77,8 +78,8 @@ class BooksController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Book  $book
-     * @return \Illuminate\Http\Response
+     * @param Book $book
+     * @return Response
      */
     public function destroy(Book $book)
     {
@@ -88,20 +89,24 @@ class BooksController extends Controller
     /**
      *
      *
-     * @param  integer $bookId
-     * @return \Illuminate\Http\Response
+     * @param integer $bookId
+     * @return Response
      */
-    public function download(int $bookId)
+    public function download(int $id)
     {
-        $book = Book::find($bookId);
-        $fileName = Book::extractFile($book->some_another_id);
-        $content = file_get_contents(storage_path()."/app/public/{$fileName}.fb2");
+        $book = Book::find($id);
+
+        if (Book::extractFile($book->file_id)) {
+            $content = file_get_contents(storage_path() . "/app/public/{$book->file_id}.fb2");
+        } else {
+            return response("", 404);
+        }
 
         return response($content)
             ->withHeaders([
-                'Content-Type' =>  'application/xml',
+                'Content-Type' => 'application/xml',
                 "Content-length" => strlen($content),
-                "Content-disposition" => "attachment; filename=\"{$book->id}.fb2\"",
+                "Content-disposition" => "attachment; filename=\"{$book->title}.fb2\"",
             ]);
     }
 }

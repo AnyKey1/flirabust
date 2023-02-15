@@ -2,25 +2,44 @@
 
 namespace App\Models;
 
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use ZipArchive;
 
-class Book extends Model {
+class Book extends Model
+{
     use HasFactory;
 
     protected $primaryKey = 'id';
 
+    public static function extractFile($fileId)
+    {
+        $zip = new ZipArchive;
 
-    private static function getArchive($fileId) {
+        $archive_name = self::getArchive($fileId);
+
+        if ($zip->open("/var/www/files/{$archive_name}") === true) {
+            try {
+                $zip->extractTo(storage_path() . "/app/public", ["{$fileId}.fb2"]);
+
+            } catch (Exception $e) {
+                echo $e->getMessage();
+            }
+            $zip->close();
+        } else {
+            return false;
+        }
+        return true;
+    }
+
+    private static function getArchive($fileId)
+    {
         if ($handle = opendir('/var/www/files/')) {
             while (false !== ($entry = readdir($handle))) {
-                if($entry == 'd.fb2-009373-367300.zip'){continue;}
                 if (strstr($entry, ".zip")) {
                     $parts = explode("-", pathinfo($entry)["filename"]);
-
-                    //print_r($parts);
-                    if ($parts[1] < $fileId &&  $fileId < $parts[2] ) {
-                        //echo $entry;
+                    if ($parts[1] < $fileId && $fileId < $parts[2]) {
                         return $entry;
                     }
                 }
@@ -29,46 +48,26 @@ class Book extends Model {
         }
     }
 
-    public static function extractFile($fileId) {
-        $zip = new \ZipArchive;
-
-        $archive_name = self::getArchive($fileId);
-
-
-        if ($zip->open("/var/www/files/{$archive_name}") === true) {
-            try{
-                $zip->extractTo(storage_path()."/app/public", ["{$fileId}.fb2"]);
-
-            } catch (\Exception $e){
-                echo $e->getMessage();
-            }
-            $zip->close();
-        } else {
-            echo "!!";
-        }
-        return $fileId;
-    }
-
-    public function getTagsAttribute($value){
+    public function getTagsAttribute($value)
+    {
         return array_map("trim", explode(',', $value));
     }
 
-    public function getCategoryAttribute($value){
+    public function getCategoryAttribute($value)
+    {
         return explode(':', $value);
     }
 
-    public function getAuthorNameAttribute($value){
-
+    public function getAuthorNameAttribute($value)
+    {
         $res = [];
         $authors = explode(":", $value);
 
-        foreach ($authors as $author){
+        foreach ($authors as $author) {
             $res[] = str_replace(",", " ", $author);
         }
 
         return implode("; ", $res);
-
-
     }
 
 }

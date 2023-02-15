@@ -20,8 +20,8 @@ class CreateBooksTable extends Migration
             $table->string('title');
             $table->string('serie');
             $table->string('some_id');
-            $table->string('some_another_id');
-            $table->string('some_unknown_id');
+            $table->string('file_id');
+            $table->string('file_size');
             $table->string('some_id_7');
             $table->string('some_id_8');
             $table->string('format');
@@ -29,7 +29,11 @@ class CreateBooksTable extends Migration
             $table->string('some_id_12');
             $table->string('tags');
             $table->string('some_id_14');
-            $table->timestamps();
+        });
+
+        Schema::table('books', function ($table) {
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 
