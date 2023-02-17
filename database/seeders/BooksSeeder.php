@@ -40,10 +40,12 @@ class BooksSeeder extends Seeder {
                     $params['some_id_7']       = $fields[7];
                     $params['some_id_8']       = $fields[8];
                     $params['format']          = $fields[9];
-                    $params['lang']            = $fields[10];
+                    $params['tags']            = $fields[10];
                     $params['some_id_12']      = $fields[11];
-                    $params['tags']            = $fields[13];
+                    $params['lang']            = $fields[13];
                     $params['some_id_14']      = $fields[12];
+
+                    dd($params);
 /*AUTHOR;
 GENRE;
 TITLE;

@@ -29,6 +29,9 @@ Route::get('/book/{id}', [BooksController::class, "show"])->name('book');
 Route::get('/download/{id}', [BooksController::class, "download"]);
 //Route::get('/search/', [SearchController::class, "get"]);
 Route::get('/search/', [SearchController::class, "search"])->name("search");
+Route::get('/category/{category:category}', [SearchController::class, "search"]);
+Route::get('/series/{serie_name}', [SearchController::class, "search"]);
+Route::get('/tag/{tag_name}', [SearchController::class, "search"]);
 
 Auth::routes();
 

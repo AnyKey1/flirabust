@@ -180,7 +180,7 @@
                 <ul class="list-inline widget-list-inline">
 
                     @foreach( array_slice(json_decode(file_get_contents(storage_path("categories.txt")), 1), 0, 50) as $c=>$v)
-                    <li class="list-inline-item"><a href="/categories/{{$c}}">{{ $c }} <small class="ml-auto">{{$v}}</small></a></li>
+                    <li class="list-inline-item"><a href="/category/{{$c}}">{{ $c }} <small class="ml-auto">{{$v}}</small></a></li>
                     @endforeach
                     {{-- <li class="list-inline-item"><a href="tags.html">Color</a></li>
                     <li class="list-inline-item"><a href="tags.html">Creative</a></li>

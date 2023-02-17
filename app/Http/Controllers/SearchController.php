@@ -23,16 +23,19 @@ class SearchController extends Controller
      */
     public function search(?Request $request){
 
-        //dd($request->input());
+        //dd(($request->route()->parameters));
 
-        if(count($request->input()) == 0){
-            return view("search")->with("result", []);
-        }
+
 
         $author = $request->input("author");
         $title = $request->input("title");
+        $category = $request->route()->parameters["category"] ?? null;
+        $serie = $request->route()->parameters["serie_name"] ?? null;
+        $tag = $request->input("tag_name");
 
+        //dd($category);
         $result = [];
+        $view = "search";
         $result = Book::where("id", ">", "0");
         if($author){
             $result->where('author_name', 'LIKE', "%{$author}%");
@@ -41,10 +44,25 @@ class SearchController extends Controller
         if($title){
             $result->where('title', 'LIKE', "%{$title}%");
         }
+        if($tag){
+            $result->where('tags', 'LIKE', "%{$tag}%");
+        }
+        if($category){
+           $result->where('category', 'LIKE', "%{$category}%");
+           //$view = "book";
+        }
+        if($serie){
+           $result->where('serie', 'LIKE', "%{$serie}%");
+            //$view = "book";
+        }
+
+        $result->limit(10);
+        //dd($result);
         $result = $result->get();
 
-        //dd([$title, $author]);
-        return view("search")->with("result", $result);
+        //dd($category);
+
+        return view($view)->with("result", $result);
 
     }
 }
