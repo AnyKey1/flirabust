@@ -15,21 +15,24 @@ class CreateBooksTable extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
-            $table->text('author_name');
-            $table->string('category');
-            $table->string('title');
-            $table->string('serie');
-            $table->string('some_id');
-            $table->string('file_id');
-            $table->string('file_size');
-            $table->string('some_id_7');
-            $table->string('some_id_8');
-            $table->string('format');
+            $table->text('author_name'); //AUTHOR
+            $table->string('category'); //GENRE
+            $table->string('title'); //TITLE
+            $table->string('serie'); //SERIES
+            $table->string('some_id'); //SERNO
+            $table->string('file_id'); //FILE
+            $table->string('file_size'); //SIZE
+            $table->string('some_id_7'); //LIBID
+            $table->string('some_id_8'); //DEL
+            $table->string('format'); //EXT
             $table->string('lang');
             $table->string('some_id_12');
             $table->string('tags');
             $table->string('some_id_14');
         });
+
+        ;;;;;;;;;;DATE;INSNO;FOLDER;LANG;LIBRATE;KEYWORDS;
+
 
         Schema::table('books', function ($table) {
             $table->timestamp('created_at')->useCurrent();

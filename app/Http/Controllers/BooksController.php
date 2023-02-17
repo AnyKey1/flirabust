@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class BooksController extends Controller
 {
@@ -94,6 +95,10 @@ class BooksController extends Controller
      */
     public function download(int $id)
     {
+        if (!Auth::user()) {
+             return response("Only registered users allowed", 403);
+        }
+
         $book = Book::find($id);
 
         if (Book::extractFile($book->file_id)) {

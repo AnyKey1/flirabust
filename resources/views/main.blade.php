@@ -179,10 +179,10 @@
                 <h1 class="mb-5">What Would You <br> Like To Read Today?</h1>
                 <ul class="list-inline widget-list-inline">
 
-                    @foreach([7,8,9] as $tag)
-                    <li class="list-inline-item"><a href="tags.html">{{$tag}}</a></li>
+                    @foreach( array_slice(json_decode(file_get_contents(storage_path("categories.txt")), 1), 0, 50) as $c=>$v)
+                    <li class="list-inline-item"><a href="/categories/{{$c}}">{{ $c }} <small class="ml-auto">{{$v}}</small></a></li>
                     @endforeach
-                    <li class="list-inline-item"><a href="tags.html">Color</a></li>
+                    {{-- <li class="list-inline-item"><a href="tags.html">Color</a></li>
                     <li class="list-inline-item"><a href="tags.html">Creative</a></li>
                     <li class="list-inline-item"><a href="tags.html">Decorate</a></li>
                     <li class="list-inline-item"><a href="tags.html">Demo</a></li>
@@ -195,7 +195,7 @@
                     <li class="list-inline-item"><a href="tags.html">Taste</a></li>
                     <li class="list-inline-item"><a href="tags.html">Tasty</a></li>
                     <li class="list-inline-item"><a href="tags.html">Vlog</a></li>
-                    <li class="list-inline-item"><a href="tags.html">Wow</a></li>
+                    <li class="list-inline-item"><a href="tags.html">Wow</a></li>--}}
                 </ul>
             </div>
         </div>
